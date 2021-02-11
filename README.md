@@ -1,4 +1,6 @@
-# Using fork of jopeek's Loot Sheet NPC 5E to create a NPC loot sheet for Genefunk 2090 - No current releases (WIP) - Go to jopeek/fvtt-loot-sheet-npc-5e for 5E version updates
+# NPC loot sheet for Genefunk 2090 - No current releases (WIP)
+
+Using fork of jopeek's Loot Sheet NPC 5E to create a NPC loot sheet for Genefunk 2090 - No current releases (WIP) - Go to jopeek/fvtt-loot-sheet-npc-5e for 5E version updates
 
 This module aims to add an additional NPC sheet to the Genefunk 2090 game system which can be used for loot containers such as containers or shopkeepers. It also allows hacks to be automatically converted into sellable items by dragging them onto this sheet. 
 
