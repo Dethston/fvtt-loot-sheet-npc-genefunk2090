@@ -1,4 +1,4 @@
-import ActorSheet5eNPC from "../../systems/dnd5e/module/actor/sheets/npc.js";
+import ActorSheet5eNPC from "../../systems/genefunk/module/actor/sheets/npc.js";
 
 class QuantityDialog extends Dialog {
     constructor(callback, options) {
@@ -47,7 +47,7 @@ class QuantityDialog extends Dialog {
 
 class LootSheet5eNPC extends ActorSheet5eNPC {
 
-    static SOCKET = "module.lootsheetnpc5e";
+    static SOCKET = "module.lootsheetnpcgenefunk5e";
 
     get template() {
         // adding the #equals and #unequals handlebars helper
@@ -63,16 +63,16 @@ class LootSheet5eNPC extends ActorSheet5eNPC {
             return (Math.round(basePrice * modifier * 100) / 100).toLocaleString('en') + " gp";
         });
 
-        const path = "systems/dnd5e/templates/actors/";
+        const path = "systems/genefunk/templates/actors/";
         if (!game.user.isGM && this.actor.limited) return path + "limited-sheet.html";
-        return "modules/lootsheetnpc5e/template/npc-sheet.html";
+        return "modules/lootsheetnpcgenefunk5e/template/npc-sheet.html";
     }
 
     static get defaultOptions() {
         const options = super.defaultOptions;
 
         mergeObject(options, {
-            classes: ["dnd5e sheet actor npc npc-sheet loot-sheet-npc"],
+            classes: ["genefunk sheet actor npc npc-sheet loot-sheet-npc"],
             width: 890,
             height: 750
         });
@@ -93,16 +93,16 @@ class LootSheet5eNPC extends ActorSheet5eNPC {
         //console.log("sheetData.isGM: ", sheetData.isGM);
         console.log(this.actor);
 
-        let lootsheettype = await this.actor.getFlag("lootsheetnpc5e", "lootsheettype");
-        if (!lootsheettype) await this.actor.setFlag("lootsheetnpc5e", "lootsheettype", "Loot");
-        lootsheettype = await this.actor.getFlag("lootsheetnpc5e", "lootsheettype");
+        let lootsheettype = await this.actor.getFlag("lootsheetnpcgenefunk5e", "lootsheettype");
+        if (!lootsheettype) await this.actor.setFlag("lootsheetnpcgenefunk5e", "lootsheettype", "Loot");
+        lootsheettype = await this.actor.getFlag("lootsheetnpcgenefunk5e", "lootsheettype");
 
 
         let priceModifier = 1.0;
         if (lootsheettype === "Merchant") {
-            priceModifier = await this.actor.getFlag("lootsheetnpc5e", "priceModifier");
-            if (!priceModifier) await this.actor.setFlag("lootsheetnpc5e", "priceModifier", 1.0);
-            priceModifier = await this.actor.getFlag("lootsheetnpc5e", "priceModifier");
+            priceModifier = await this.actor.getFlag("lootsheetnpcgenefunk5e", "priceModifier");
+            if (!priceModifier) await this.actor.setFlag("lootsheetnpcgenefunk5e", "priceModifier", 1.0);
+            priceModifier = await this.actor.getFlag("lootsheetnpcgenefunk5e", "priceModifier");
         }
 
         let totalWeight = 0;
@@ -121,8 +121,8 @@ class LootSheet5eNPC extends ActorSheet5eNPC {
         sheetData.totalQuantity = totalQuantity;
         sheetData.priceModifier = priceModifier;
         sheetData.rolltables = game.tables.entities;
-        sheetData.lootCurrency = game.settings.get("lootsheetnpc5e", "lootCurrency");
-        sheetData.lootAll = game.settings.get("lootsheetnpc5e", "lootAll");
+        sheetData.lootCurrency = game.settings.get("lootsheetnpcgenefunk5e", "lootCurrency");
+        sheetData.lootAll = game.settings.get("lootsheetnpcgenefunk5e", "lootAll");
 
         // Return data for rendering
         return sheetData;
@@ -185,7 +185,7 @@ class LootSheet5eNPC extends ActorSheet5eNPC {
         event.preventDefault();
         console.log("Loot Sheet | Merchant settings changed");
 
-        const moduleNamespace = "lootsheetnpc5e";
+        const moduleNamespace = "lootsheetnpcgenefunk5e";
         const expectedKeys = ["rolltable", "shopQty", "itemQty", "itemQtyLimit", "clearInventory"];
 
         let targetKey = event.target.name.split('.')[3];
@@ -219,7 +219,7 @@ class LootSheet5eNPC extends ActorSheet5eNPC {
     async _merchantInventoryUpdate(event, html) {
         event.preventDefault();
 
-        const moduleNamespace = "lootsheetnpc5e";
+        const moduleNamespace = "lootsheetnpcgenefunk5e";
         const rolltableName = this.actor.getFlag(moduleNamespace, "rolltable");
         const shopQtyFormula = this.actor.getFlag(moduleNamespace, "shopQty") || "1";
         const itemQtyFormula = this.actor.getFlag(moduleNamespace, "itemQty") || "1";
@@ -318,7 +318,7 @@ class LootSheet5eNPC extends ActorSheet5eNPC {
 
         game.packs.map(p => p.collection);
 
-        const pack = game.packs.find(p => p.collection === "dnd5e.items");
+        const pack = game.packs.find(p => p.collection === "genefunk.weapons");
 
         let i = 0;
 
@@ -376,7 +376,7 @@ class LootSheet5eNPC extends ActorSheet5eNPC {
 
         let selectedItem = event.target[selectedIndex].value;
 
-        await currentActor.setFlag("lootsheetnpc5e", "lootsheettype", selectedItem);
+        await currentActor.setFlag("lootsheetnpcgenefunk5e", "lootsheettype", selectedItem);
 
     }
 
@@ -514,7 +514,7 @@ class LootSheet5eNPC extends ActorSheet5eNPC {
      */
     _lootCoins(event) {
         event.preventDefault();
-        if (!game.settings.get("lootsheetnpc5e", "lootCurrency")) {
+        if (!game.settings.get("lootsheetnpcgenefunk5e", "lootCurrency")) {
             return;
         }
         console.log("Loot Sheet | Loot Coins clicked");
@@ -616,7 +616,7 @@ class LootSheet5eNPC extends ActorSheet5eNPC {
         //console.log("Loot Sheet | Price Modifier clicked");
         //console.log(this.actor.isToken);
 
-        let priceModifier = await this.actor.getFlag("lootsheetnpc5e", "priceModifier");
+        let priceModifier = await this.actor.getFlag("lootsheetnpcgenefunk5e", "priceModifier");
         if (!priceModifier) priceModifier = 1.0;
 
         priceModifier = Math.round(priceModifier * 100);
@@ -633,7 +633,7 @@ class LootSheet5eNPC extends ActorSheet5eNPC {
                 one: {
                     icon: '<i class="fas fa-check"></i>',
                     label: "Update",
-                    callback: () => this.actor.setFlag("lootsheetnpc5e", "priceModifier", document.getElementById("price-modifier-percent").value / 100)
+                    callback: () => this.actor.setFlag("lootsheetnpcgenefunk5e", "priceModifier", document.getElementById("price-modifier-percent").value / 100)
                 },
                 two: {
                     icon: '<i class="fas fa-times"></i>',
@@ -690,7 +690,7 @@ class LootSheet5eNPC extends ActorSheet5eNPC {
     }
 
     _hackydistributeCoins(containerActor) {
-        //This is identical as the distributeCoins function defined in the init hook which for some reason can't be called from the above _distributeCoins method of the LootSheetNPC5E class. I couldn't be bothered to figure out why a socket can't be called as the GM... so this is a hack but it works.
+        //This is identical as the distributeCoins function defined in the init hook which for some reason can't be called from the above _distributeCoins method of the lootsheetnpcgenefunk5e class. I couldn't be bothered to figure out why a socket can't be called as the GM... so this is a hack but it works.
 
         let actorData = containerActor.data
         let observers = [];
@@ -1070,7 +1070,7 @@ class LootSheet5eNPC extends ActorSheet5eNPC {
 }
 
 //Register the loot sheet
-Actors.registerSheet("dnd5e", LootSheet5eNPC, {
+Actors.registerSheet("genefunk", LootSheet5eNPC, {
     types: ["npc"],
     makeDefault: false
 });
@@ -1091,13 +1091,13 @@ Hooks.on('preCreateOwnedItem', (actor, item, data) => {
     if (actor.data.type === "character") return;
 
     // If the actor is using the LootSheet5eNPC then check in the item is a spell and if so update the name.
-    if ((actor.data.flags.core || {}).sheetClass === "dnd5e.LootSheet5eNPC") {
+    if ((actor.data.flags.core || {}).sheetClass === "genefunk.LootSheet5eNPC") {
         if (item.type === "spell") {
             //console.log("Loot Sheet | dragged spell item", item);
 
-            let changeScrollIcon = game.settings.get("lootsheetnpc5e", "changeScrollIcon");
+            let changeScrollIcon = game.settings.get("lootsheetnpcgenefunk5e", "changeScrollIcon");
 
-            if (changeScrollIcon) item.img = "modules/lootsheetnpc5e/icons/Scroll" + item.data.level + ".png";
+            if (changeScrollIcon) item.img = "modules/lootsheetnpcgenefunk5e/icons/Scroll" + item.data.level + ".png";
 
             //console.log("Loot Sheet | check changeScrollIcon", changeScrollIcon);
 
@@ -1138,7 +1138,7 @@ Hooks.once("init", () => {
         return options.inverse(this);
     });
 
-    game.settings.register("lootsheetnpc5e", "convertCurrency", {
+    game.settings.register("lootsheetnpcgenefunk5e", "convertCurrency", {
         name: "Convert currency after purchases?",
         hint: "If enabled, all currency will be converted to the highest denomination possible after a purchase. If disabled, currency will subtracted simply.",
         scope: "world",
@@ -1147,7 +1147,7 @@ Hooks.once("init", () => {
         type: Boolean
     });
 
-    game.settings.register("lootsheetnpc5e", "changeScrollIcon", {
+    game.settings.register("lootsheetnpcgenefunk5e", "changeScrollIcon", {
         name: "Change icon for Spell Scrolls?",
         hint: "Changes the icon for spell scrolls to a scroll icon. If left unchecked, retains the spell's icon.",
         scope: "world",
@@ -1156,7 +1156,7 @@ Hooks.once("init", () => {
         type: Boolean
     });
 
-    game.settings.register("lootsheetnpc5e", "buyChat", {
+    game.settings.register("lootsheetnpcgenefunk5e", "buyChat", {
         name: "Display chat message for purchases?",
         hint: "If enabled, a chat message will display purchases of items from the loot sheet.",
         scope: "world",
@@ -1165,7 +1165,7 @@ Hooks.once("init", () => {
         type: Boolean
     });
 
-    game.settings.register("lootsheetnpc5e", "lootCurrency", {
+    game.settings.register("lootsheetnpcgenefunk5e", "lootCurrency", {
         name: "Loot currency?",
         hint: "If enabled, players will have the option to loot all currency to their character, in addition to splitting the currency between players.",
         scope: "world",
@@ -1174,7 +1174,7 @@ Hooks.once("init", () => {
         type: Boolean
     });
 
-    game.settings.register("lootsheetnpc5e", "lootAll", {
+    game.settings.register("lootsheetnpcgenefunk5e", "lootAll", {
         name: "Loot all?",
         hint: "If enabled, players will have the option to loot all items to their character, currency will follow the 'Loot Currency?' setting upon Loot All.",
         scope: "world",
@@ -1184,9 +1184,9 @@ Hooks.once("init", () => {
     });
 
     function chatMessage(speaker, owner, message, item) {
-        if (game.settings.get("lootsheetnpc5e", "buyChat")) {
+        if (game.settings.get("lootsheetnpcgenefunk5e", "buyChat")) {
             message = `
-            <div class="dnd5e chat-card item-card" data-actor-id="${owner._id}" data-item-id="${item._id}">
+            <div class="genefunk chat-card item-card" data-actor-id="${owner._id}" data-item-id="${item._id}">
                 <header class="card-header flexrow">
                     <img src="${item.img}" title="${item.name}" width="36" height="36">
                     <h3 class="item-name">${item.name}</h3>
@@ -1296,7 +1296,7 @@ Hooks.once("init", () => {
             quantity = sellItem.data.quantity;
         }
 
-        let sellerModifier = seller.getFlag("lootsheetnpc5e", "priceModifier");
+        let sellerModifier = seller.getFlag("lootsheetnpcgenefunk5e", "priceModifier");
         if (!sellerModifier) sellerModifier = 1.0;
 
         let itemCost = Math.round(sellItem.data.price * sellerModifier * 100) / 100;
@@ -1320,7 +1320,7 @@ Hooks.once("init", () => {
             return;
         }
 
-        let convertCurrency = game.settings.get("lootsheetnpc5e", "convertCurrency");
+        let convertCurrency = game.settings.get("lootsheetnpcgenefunk5e", "convertCurrency");
 
         if (convertCurrency) {
             buyerFundsAsGold -= itemCost;
