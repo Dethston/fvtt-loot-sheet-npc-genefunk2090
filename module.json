@@ -2,7 +2,7 @@
 	"name": "lootsheetnpcgenefunk5e",
 	"title": "Loot Sheet NPC Genefunk5e",
 	"description": "This module adds an additional NPC sheet which can be used for loot containers or shopkeepers.",
-	"version": "0.0.1",
+	"version": "0.0.3",
 	"author": "Forked from Jan Ole Peek (ChalkOne), Charles Miller (Kage), NonstickPanda - Genefunk update by Dethston",
 	"minimumCoreVersion": "0.7.7",
 	"compatibleCoreVersion": "0.7.9",
@@ -11,6 +11,6 @@
 	"styles": ["/css/lootsheetnpcgenefunk5e.css"],
 	"socket": true,
 	"url": "https://github.com/Dethston/fvtt-loot-sheet-npc-genefunk2090",
-	"manifest": "",
-	"download": ""
+	"manifest": "https://github.com/Dethston/fvtt-loot-sheet-npc-genefunk2090/releases/download/0.0.3/module.json",
+	"download": "https://github.com/Dethston/fvtt-loot-sheet-npc-genefunk2090/releases/download/0.0.3/module.zip"
 }
